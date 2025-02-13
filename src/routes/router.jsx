@@ -4,6 +4,7 @@ import HomePage from "../pages/HomePage";
 import RegisterPage from "../pages/RegisterPage";
 import LoginPage from "../pages/LoginPage";
 import SendMoneyPage from "../pages/SendMoneyPage";
+import CashOutPage from "../pages/CashOutPage";
 
 const router = createBrowserRouter([
   {
@@ -36,7 +37,7 @@ const router = createBrowserRouter([
       },
       {
         path: 'cash-out',
-        element: <h2>cash out</h2>
+        element: <CashOutPage/>
       }
     ]
   }
