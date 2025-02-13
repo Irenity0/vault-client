@@ -3,6 +3,7 @@ import RootLayout from "../layouts/RootLayout";
 import HomePage from "../pages/HomePage";
 import RegisterPage from "../pages/RegisterPage";
 import LoginPage from "../pages/LoginPage";
+import SendMoneyPage from "../pages/SendMoneyPage";
 
 const router = createBrowserRouter([
   {
@@ -23,7 +24,19 @@ const router = createBrowserRouter([
       },
       {
         path: 'dashboard',
-        element: <h2>dashboard</h2>
+        element: <h2>balance inquiry</h2>
+      },
+      {
+        path: 'send-money',
+        element: <SendMoneyPage/>
+      },
+      {
+        path: 'cash-in',
+        element: <h2>cash in</h2>
+      },
+      {
+        path: 'cash-out',
+        element: <h2>cash out</h2>
       }
     ]
   }
