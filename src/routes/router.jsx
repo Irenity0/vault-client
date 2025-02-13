@@ -14,6 +14,7 @@ import CashInPage from "../pages/CashInPage";
 import RechargeTable from "../pages/Dashboards/AdminPages/RechargeTable";
 import AgentApprovalPage from "../pages/Dashboards/AdminPages/AgentApprovalPage";
 import UserManagement from "../pages/Dashboards/AdminPages/UserManagement";
+import UserNotifications from "../pages/Dashboards/UserNotifications";
 
 const router = createBrowserRouter([
   {
@@ -67,6 +68,10 @@ const router = createBrowserRouter([
       {
         path: 'user-management',
         element: <UserManagement/>
+      },
+      {
+        path: 'user-notifications',
+        element: <UserNotifications/>
       }
     ]
   }
