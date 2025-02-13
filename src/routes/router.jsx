@@ -9,6 +9,7 @@ import UserDashboard from "../pages/Dashboards/UserDashboard";
 import AgentDashboard from "../pages/Dashboards/AgentDashboard";
 import AdminDashboard from "../pages/Dashboards/AdminDashboard";
 import UserTransactions from "../pages/Transaction_Pages/UserTransactions";
+import AgentTransactions from "../pages/Transaction_Pages/AgentTransactions";
 
 const router = createBrowserRouter([
   {
@@ -46,6 +47,10 @@ const router = createBrowserRouter([
       {
         path: 'user-transactions',
         element: <UserTransactions/>
+      },
+      {
+        path: 'agent-transactions',
+        element: <AgentTransactions/>
       }
     ]
   }
