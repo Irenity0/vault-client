@@ -10,6 +10,7 @@ import AgentDashboard from "../pages/Dashboards/AgentDashboard";
 import AdminDashboard from "../pages/Dashboards/AdminDashboard";
 import UserTransactions from "../pages/Transaction_Pages/UserTransactions";
 import AgentTransactions from "../pages/Transaction_Pages/AgentTransactions";
+import CashInPage from "../pages/CashInPage";
 
 const router = createBrowserRouter([
   {
@@ -38,7 +39,7 @@ const router = createBrowserRouter([
       },
       {
         path: 'cash-in',
-        element: <h2>cash in</h2>
+        element: <CashInPage/>
       },
       {
         path: 'cash-out',
