@@ -5,6 +5,9 @@ import RegisterPage from "../pages/RegisterPage";
 import LoginPage from "../pages/LoginPage";
 import SendMoneyPage from "../pages/SendMoneyPage";
 import CashOutPage from "../pages/CashOutPage";
+import UserDashboard from "../pages/Dashboards/UserDashboard";
+import AgentDashboard from "../pages/Dashboards/AgentDashboard";
+import AdminDashboard from "../pages/Dashboards/AdminDashboard";
 
 const router = createBrowserRouter([
   {
@@ -25,7 +28,7 @@ const router = createBrowserRouter([
       },
       {
         path: 'dashboard',
-        element: <h2>balance inquiry</h2>
+        element: <AdminDashboard/>
       },
       {
         path: 'send-money',
