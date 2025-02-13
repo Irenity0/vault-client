@@ -11,6 +11,7 @@ import AdminDashboard from "../pages/Dashboards/AdminDashboard";
 import UserTransactions from "../pages/Transaction_Pages/UserTransactions";
 import AgentTransactions from "../pages/Transaction_Pages/AgentTransactions";
 import CashInPage from "../pages/CashInPage";
+import RechargeTable from "../pages/Dashboards/AdminPages/RechargeTable";
 
 const router = createBrowserRouter([
   {
@@ -52,6 +53,10 @@ const router = createBrowserRouter([
       {
         path: 'agent-transactions',
         element: <AgentTransactions/>
+      }, 
+      {
+        path: 'recharge-agents',
+        element: <RechargeTable/>
       }
     ]
   }
