@@ -12,6 +12,7 @@ import UserTransactions from "../pages/Transaction_Pages/UserTransactions";
 import AgentTransactions from "../pages/Transaction_Pages/AgentTransactions";
 import CashInPage from "../pages/CashInPage";
 import RechargeTable from "../pages/Dashboards/AdminPages/RechargeTable";
+import AgentApprovalPage from "../pages/Dashboards/AdminPages/AgentApprovalPage";
 
 const router = createBrowserRouter([
   {
@@ -57,6 +58,10 @@ const router = createBrowserRouter([
       {
         path: 'recharge-agents',
         element: <RechargeTable/>
+      },
+      {
+        path: 'approve-agents',
+        element: <AgentApprovalPage/>
       }
     ]
   }
