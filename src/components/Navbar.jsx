@@ -1,10 +1,11 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import useAxiosPublic from "../hooks/useAxiosPublic";
 import useAuth from "../hooks/useAuth";
 
 const Navbar = () => {
   const [isLoggedIn, setIsLoggedIn] = useAuth(); // Manage login state
   const axiosPublic = useAxiosPublic();
+  const navigate = useNavigate();
 
   const handleLogout = async () => {
     try {
@@ -28,8 +29,7 @@ const Navbar = () => {
       // Update the frontend state to reflect logged-out status
       setIsLoggedIn(false);
   
-      // Reload the page
-      window.location.reload();
+      navigate('/');
     } catch (err) {
       console.error('Error logging out:', err);
     }

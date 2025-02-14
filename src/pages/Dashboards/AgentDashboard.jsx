@@ -27,7 +27,7 @@ const AgentDashboard = () => {
         className="btn bg-[#560106] text-white py-2 px-6 rounded-md hover:bg-[#7a0811] transition-colors"
         onClick={handleRecharge}
       >
-        Balance Recharge: 100,000
+        Balance Recharge: 100, agent
       </button>
     </section>
   );

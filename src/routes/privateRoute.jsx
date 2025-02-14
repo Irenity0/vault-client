@@ -1,15 +1,17 @@
 import React from 'react';
-import { Navigate } from 'react-router-dom';
 import useAuth from '../hooks/useAuth';
+import { Navigate } from 'react-router-dom';
+import useRole from '../hooks/useRole';
 
 const PrivateRoute = ({ children }) => {
-  const [isLoggedIn] = useAuth();
-
-  if (isLoggedIn === null) {
-    return <div>Loading...</div>;
+  const [isLoggedIn, authLoading] = useAuth();
+  const [role, loading] = useRole();
+  
+  if(loading && authLoading){
+    return <div>loading...</div>
   }
 
-  if (!isLoggedIn) {
+  if (!role && !isLoggedIn) {
     return <Navigate to="/login" replace />;
   }
 

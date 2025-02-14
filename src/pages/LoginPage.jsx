@@ -33,7 +33,7 @@ const LoginPage = () => {
       const response = await axiosPublic.post('/login', formData);
 
       // Check for errors regarding multiple logins for users/agents
-      if (response.data.message === 'You are already logged in from another device!') {
+      if (response?.data?.message === 'You are already logged in from another device!') {
         setError('You are already logged in from another device!');
         return;
       }

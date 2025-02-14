@@ -5,9 +5,6 @@ import RegisterPage from "../pages/RegisterPage";
 import LoginPage from "../pages/LoginPage";
 import SendMoneyPage from "../pages/SendMoneyPage";
 import CashOutPage from "../pages/CashOutPage";
-import UserDashboard from "../pages/Dashboards/UserDashboard";
-import AgentDashboard from "../pages/Dashboards/AgentDashboard";
-import AdminDashboard from "../pages/Dashboards/AdminDashboard";
 import UserTransactions from "../pages/Transaction_Pages/UserTransactions";
 import AgentTransactions from "../pages/Transaction_Pages/AgentTransactions";
 import CashInPage from "../pages/CashInPage";
@@ -16,6 +13,10 @@ import AgentApprovalPage from "../pages/Dashboards/AdminPages/AgentApprovalPage"
 import UserManagement from "../pages/Dashboards/AdminPages/UserManagement";
 import UserNotifications from "../pages/Dashboards/UserNotifications";
 import PrivateRoute from "./privateRoute";
+import RoleBasedDashboard from "../pages/Dashboards/RoleBasedDashboard";
+import UserRoute from "./userRoute";
+import AgentRoute from "./agentRoute";
+import AdminRoute from "./adminRoute";
 
 const router = createBrowserRouter([
   {
@@ -36,43 +37,43 @@ const router = createBrowserRouter([
       },
       {
         path: 'dashboard',
-        element: <PrivateRoute><UserDashboard/></PrivateRoute>
+        element: <PrivateRoute><RoleBasedDashboard/></PrivateRoute>
       },
       {
         path: 'send-money',
-        element: <SendMoneyPage/>
+        element: <UserRoute><SendMoneyPage/></UserRoute>
       },
       {
         path: 'cash-in',
-        element: <CashInPage/>
+        element: <AgentRoute><CashInPage/></AgentRoute>
       },
       {
         path: 'cash-out',
-        element: <CashOutPage/>
+        element: <UserRoute><CashOutPage/></UserRoute>
       }, 
       {
         path: 'user-transactions',
-        element: <UserTransactions/>
+        element: <UserRoute><UserTransactions/></UserRoute>
       },
       {
         path: 'agent-transactions',
-        element: <AgentTransactions/>
+        element: <AgentRoute><AgentTransactions/></AgentRoute>
       }, 
       {
         path: 'recharge-agents',
-        element: <RechargeTable/>
+        element: <AdminRoute><RechargeTable/></AdminRoute>
       },
       {
         path: 'approve-agents',
-        element: <AgentApprovalPage/>
+        element: <AdminRoute><AgentApprovalPage/></AdminRoute>
       },
       {
         path: 'user-management',
-        element: <UserManagement/>
+        element: <AdminRoute><UserManagement/></AdminRoute>
       },
       {
         path: 'user-notifications',
-        element: <UserNotifications/>
+        element: <UserRoute><UserNotifications/></UserRoute>
       }
     ]
   }
