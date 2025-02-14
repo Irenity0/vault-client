@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import useAxiosPublic from '../hooks/useAxiosPublic';
 
 
 const RegisterPage = () => {
+  const navigate = useNavigate();
+  const axiosPublic = useAxiosPublic();
 
-  // State to store form input values
   const [formData, setFormData] = useState({
     name: '',
     pin: '',
@@ -14,10 +16,8 @@ const RegisterPage = () => {
     nid: '',
   });
 
-  // State for errors
   const [error, setError] = useState(null);
 
-  // Handle form input changes
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData((prevState) => ({
@@ -29,7 +29,25 @@ const RegisterPage = () => {
   // Handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(formData);
+    // Validation for pin (5 digits) and NID (10 digits)
+    if (formData.pin.length !== 5 || !/^\d{5}$/.test(formData.pin)) {
+      setError('Pin must be a 5-digit number.');
+      return;
+    }
+
+    if (formData.nid.length !== 10 || !/^\d{10}$/.test(formData.nid)) {
+      setError('NID must be a 10-digit number.');
+      return;
+    }
+
+    try {
+      const response = await axiosPublic.post('/register', formData);
+      console.log(response.data);
+      // Redirect to login after successful registration
+      navigate('/login');
+    } catch (err) {
+      setError(err.response?.data?.message || 'Something went wrong!');
+    }
   };
 
   return (
@@ -94,15 +112,15 @@ const RegisterPage = () => {
           </div>
 
           <div>
-            <label className="block text-sm font-medium mb-1">Account Type</label>
+            <label className="block text-sm font-medium mb-1">Role</label>
             <select
-              name="accountType"
+              name="role"
               className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#560106] focus:border-[#560106] outline-none transition-all"
-              value={formData.accountType}
+              value={formData.role}
               onChange={handleInputChange}
               required
             >
-              <option value="">Select Account Type</option>
+              <option value="">Select Role</option>
               <option value="user">User</option>
               <option value="agent">Agent</option>
             </select>

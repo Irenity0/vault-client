@@ -1,14 +1,17 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import useAxiosPublic from '../hooks/useAxiosPublic';
 
 const LoginPage = () => {
+
+  const navigate = useNavigate();
+  const axiosPublic = useAxiosPublic();
 
   // State to store form input values
   const [formData, setFormData] = useState({
     mobileNumber: '',
-    email: '',
     pin: '',
-    accountType: 'user', // Default to 'user' for normal users
+    role: 'user', // Default to 'user' for normal users, 'admin' can be set manually
   });
 
   // State for errors
@@ -26,6 +29,23 @@ const LoginPage = () => {
   // Handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
+    try {
+      const response = await axiosPublic.post('/login', formData);
+
+      // Check for errors regarding multiple logins for users/agents
+      if (response.data.message === 'You are already logged in from another device!') {
+        setError('You are already logged in from another device!');
+        return;
+      }
+
+      // Store the JWT token in localStorage or in state
+      localStorage.setItem('token', response.data.token);
+
+      // Redirect to the dashboard or homepage after successful login
+      navigate('/dashboard');
+    } catch (err) {
+      setError(err.response?.data?.message || 'Something went wrong!');
+    }
   };
 
   return (
@@ -44,19 +64,6 @@ const LoginPage = () => {
               className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#560106] focus:border-[#560106] outline-none transition-all"
               placeholder="Your Mobile Number"
               value={formData.mobileNumber}
-              onChange={handleInputChange}
-              required
-            />
-          </div>
-
-          <div>
-            <label className="block text-sm font-medium mb-1">Email</label>
-            <input
-              type="email"
-              name="email"
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#560106] focus:border-[#560106] outline-none transition-all"
-              placeholder="your@email.com"
-              value={formData.email}
               onChange={handleInputChange}
               required
             />

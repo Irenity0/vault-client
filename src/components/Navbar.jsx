@@ -1,6 +1,40 @@
 import { Link } from "react-router-dom";
+import useAxiosPublic from "../hooks/useAxiosPublic";
+import useAuth from "../hooks/useAuth";
 
 const Navbar = () => {
+  const [isLoggedIn, setIsLoggedIn] = useAuth(); // Manage login state
+  const axiosPublic = useAxiosPublic();
+
+  const handleLogout = async () => {
+    try {
+      // Get the token from localStorage
+      const token = localStorage.getItem('token');
+      if (!token) {
+        console.log('No token found!');
+        return;
+      }
+  
+      // Call the logout API, sending the token for authentication
+      await axiosPublic.post('/logout', {}, {
+        headers: {
+          Authorization: `Bearer ${token}`, // Send token in the Authorization header
+        }
+      });
+  
+      // Remove the token from localStorage
+      localStorage.removeItem('token');
+  
+      // Update the frontend state to reflect logged-out status
+      setIsLoggedIn(false);
+  
+      // Reload the page
+      window.location.reload();
+    } catch (err) {
+      console.error('Error logging out:', err);
+    }
+  };
+  
 
   return (
     <div className="bg-[#d1b48c] text-[#7a0106] shadow-sm">
@@ -14,6 +48,14 @@ const Navbar = () => {
             </div>
             <ul tabIndex={0} className="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow">
               <li><a>Item 1</a></li>
+              <li>
+                <a>Parent</a>
+                <ul className="p-2">
+                  <li><a>Submenu 1</a></li>
+                  <li><a>Submenu 2</a></li>
+                </ul>
+              </li>
+              <li><a>Item 3</a></li>
             </ul>
           </div>
           <Link to={'/'} className="btn btn-ghost text-2xl hover:bg-[#7a0106] hover:text-[#d1b48c] hover:border-none border-none font-bold">Vault_</Link>
@@ -22,12 +64,31 @@ const Navbar = () => {
         <div className="navbar-center hidden lg:flex">
           <ul className="menu menu-horizontal px-1">
             <li><a>Item 1</a></li>
+            <li>
+              <details>
+                <summary>Parent</summary>
+                <ul className="p-2">
+                  <li><a>Submenu 1</a></li>
+                  <li><a>Submenu 2</a></li>
+                </ul>
+              </details>
+            </li>
+            <li><a>Item 3</a></li>
           </ul>
         </div>
 
         <div className="navbar-end space-x-5 text-[#d1b48c]">
-          <Link className="btn bg-[#7a0106] border-none" to={'/login'}>Login</Link>
-          <Link className="btn bg-[#7a0106] border-none" to={'/register'}>Register</Link>
+          {isLoggedIn ? (
+            <>
+              <Link to="/dashboard" className="btn bg-[#7a0106] border-none">Dashboard</Link>
+              <button onClick={handleLogout} className="btn bg-[#7a0106] border-none">Logout</button>
+            </>
+          ) : (
+            <>
+              <Link className="btn bg-[#7a0106] border-none" to={'/login'}>Login</Link>
+              <Link className="btn bg-[#7a0106] border-none" to={'/register'}>Register</Link>
+            </>
+          )}
         </div>
       </div>
     </div>

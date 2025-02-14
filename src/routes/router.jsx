@@ -15,6 +15,7 @@ import RechargeTable from "../pages/Dashboards/AdminPages/RechargeTable";
 import AgentApprovalPage from "../pages/Dashboards/AdminPages/AgentApprovalPage";
 import UserManagement from "../pages/Dashboards/AdminPages/UserManagement";
 import UserNotifications from "../pages/Dashboards/UserNotifications";
+import PrivateRoute from "./privateRoute";
 
 const router = createBrowserRouter([
   {
@@ -35,7 +36,7 @@ const router = createBrowserRouter([
       },
       {
         path: 'dashboard',
-        element: <AdminDashboard/>
+        element: <PrivateRoute><UserDashboard/></PrivateRoute>
       },
       {
         path: 'send-money',
