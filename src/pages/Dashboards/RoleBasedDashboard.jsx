@@ -4,16 +4,26 @@ import UserDashboard from "./UserDashboard";
 import AgentDashboard from "./AgentDashboard";
 import AdminDashboard from "./AdminDashboard";
 import useRole from "../../hooks/useRole";
+import useUserInfo from "../../hooks/useUserInfo";
 
 const RoleBasedDashboard = () => {
   const [role, loading] = useRole();
+  const { user, loading: userLoading} = useUserInfo();
 
-  if (loading) {
+  if (loading, userLoading) {
     return <div>Loading...</div>;
   }
 
   if (!role) {
     return <Navigate to="/login" replace />; // Redirect to login if no role
+  }
+
+  if (user?.status === "pending") {
+    return <div className="text-yellow-500 text-center p-4 h-[34rem]">Your account is pending approval.</div>;
+  }
+
+  if (user?.status === "blocked") {
+    return <div className="text-red-500 text-center p-4 h-[34rem]">Your account has been blocked.</div>;
   }
 
   switch (role) {

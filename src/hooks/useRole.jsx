@@ -16,6 +16,7 @@ const useRole = () => {
         }
 
         const decoded = jwtDecode(token); // Decode the token
+        console.log(decoded);
         setRole(decoded.role || null); // Set the role
       } 
       

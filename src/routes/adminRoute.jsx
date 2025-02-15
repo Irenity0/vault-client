@@ -38,7 +38,7 @@ const AdminRoute = ({children}) => {
       };
 
     if(loading && authLoading){
-        return <div>loading...</div>
+        return <div className="h-[34rem]">loading...</div>
       }
     
     if (!role && !isLoggedIn) {

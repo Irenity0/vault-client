@@ -2,56 +2,64 @@ import { Navigate, useNavigate } from "react-router-dom";
 import useAuth from "../hooks/useAuth";
 import useRole from "../hooks/useRole";
 import useAxiosPublic from "../hooks/useAxiosPublic";
+import useUserInfo from "../hooks/useUserInfo";
 
-const AgentRoute = ({children}) => {
-    const [setIsLoggedIn, isLoggedIn, authLoading] = useAuth();
-    const [role, loading] = useRole();
-    const navigate = useNavigate();
-    const axiosPublic = useAxiosPublic();
+const AgentRoute = ({ children }) => {
+  const [setIsLoggedIn, isLoggedIn, authLoading] = useAuth();
+  const [role, loading] = useRole();
+  const { user, loading: userLoading, error } = useUserInfo();
+  console.log(user);
+  const navigate = useNavigate();
+  const axiosPublic = useAxiosPublic();
 
-    const handleLogout = async () => {
-        try {
-          // Get the token from localStorage
-          const token = localStorage.getItem('token');
-          if (!token) {
-            console.log('No token found!');
-            return;
-          }
-      
-          // Call the logout API, sending the token for authentication
-          await axiosPublic.post('/logout', {}, {
-            headers: {
-              Authorization: `Bearer ${token}`, // Send token in the Authorization header
-            }
-          });
-      
-          // Remove the token from localStorage
-          localStorage.removeItem('token');
-      
-          // Update the frontend state to reflect logged-out status
-          setIsLoggedIn(false);
-      
-          navigate('/');
-        } catch (err) {
-          console.error('Error logging out:', err);
-        }
-      };
-
-    if(loading && authLoading){
-        return <div>loading...</div>
+  const handleLogout = async () => {
+    try {
+      const token = localStorage.getItem("token");
+      if (!token) {
+        console.log("No token found!");
+        return;
       }
-    
-    if (!role && !isLoggedIn) {
-      return <Navigate to="/login" replace />;
-    }
 
-    if(role !== 'agent'){
-        handleLogout();
-        navigate('/login');
+      await axiosPublic.post(
+        "/logout",
+        {},
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      localStorage.removeItem("token");
+      setIsLoggedIn(false);
+      navigate("/");
+    } catch (err) {
+      console.error("Error logging out:", err);
     }
-    
-    return children; 
-    
-}
+  };
+
+  if (loading || authLoading || userLoading) {
+    return <div className="h-[34rem]">Loading...</div>;
+  }
+
+  if (!role || !isLoggedIn) {
+    return <Navigate to="/login" replace />;
+  }
+
+  if (role !== "agent") {
+    handleLogout();
+    return <Navigate to="/login" replace />;
+  }
+
+  if (user?.status === "pending") {
+    return <div className="text-yellow-500 text-center h-[34rem] p-4">Your account is pending approval.</div>;
+  }
+
+  if (user?.status === "blocked") {
+    return <div className="text-red-500 text-center h-[34rem] p-4">Your account has been blocked.</div>;
+  }
+
+  return children;
+};
 
 export default AgentRoute;
