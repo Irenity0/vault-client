@@ -9,10 +9,8 @@ const useUserInfo = () => {
   const axiosSecure = useAxiosSecure(); // Use secure Axios instance
 
   useEffect(() => {
-    console.log("🔄 useUserInfo: Fetching user data...");
   
     const fetchUserData = async () => {
-    //   console.log("📡 Attempting API call...");
       try {
         const token = localStorage.getItem("token");
         if (!token) {
@@ -21,7 +19,6 @@ const useUserInfo = () => {
         }
   
         const decoded = jwtDecode(token);
-        console.log("🔑 Decoded token:", decoded);
   
         const email = decoded.email;
         if (!email) {

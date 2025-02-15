@@ -1,7 +1,10 @@
 import React, { useState } from 'react';
+import useUserInfo from '../../hooks/useUserInfo';
 
 const UserDashboard = () => {
   const [isBlurred, setIsBlurred] = useState(true);
+  const { user } = useUserInfo(); // Authenticated user's info
+  console.log(user);
 
   const toggleBlur = () => {
     setIsBlurred((prev) => !prev);
@@ -15,7 +18,7 @@ const UserDashboard = () => {
           className={`cursor-pointer ${isBlurred ? 'blur' : ''} ml-4`}
           onClick={toggleBlur}
         >
-        $$$$
+        {user?.balance}
         </span>
       </h1>
     </section>

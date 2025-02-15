@@ -12,7 +12,7 @@ const RegisterPage = () => {
     pin: '',
     mobileNumber: '',
     email: '',
-    accountType: '',
+    role: '',
     nid: '',
   });
 
@@ -43,8 +43,8 @@ const RegisterPage = () => {
     try {
       const response = await axiosPublic.post('/register', formData);
       console.log(response.data);
-      // Redirect to login after successful registration
-      navigate('/login');
+      localStorage.setItem('token', response.data.token);
+      navigate('/dashboard')
     } catch (err) {
       setError(err.response?.data?.message || 'Something went wrong!');
     }
