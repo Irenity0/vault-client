@@ -11,7 +11,7 @@ const RoleBasedDashboard = () => {
   const { user, loading: userLoading} = useUserInfo();
 
   if (loading, userLoading) {
-    return <div>Loading...</div>;
+    return <div className="h-[34rem]">Loading...</div>;
   }
 
   if (!role) {
